@@ -31,11 +31,11 @@
 \RequirePackage{fancyhdr}
 
 \RequirePackage[hidelinks]{hyperref}
-\RequirePackage{cleveref}
 
 \RequirePackage{enumitem}
 
 \RequirePackage[most]{tcolorbox}
+\RequirePackage{algorithm2e}
 
 % translations
 \RequirePackage{translations}
@@ -109,36 +109,58 @@
 \DeclareMathOperator{\poly}{poly}
 
 \newcommand{\setM}[2]{\ensuremath{\left\{#1 : #2 \right\}}}
-\DeclarePairedDelimiterX{\abs}[1]{\lvert}{\rvert}{#1}
-\DeclarePairedDelimiterX{\norm}[1]{\lVert}{\rVert}{#1}
+\newcommand{\abs}[1]{\ensuremath{\left\lvert#1\right\rvert}}
+\newcommand{\norm}[1]{\ensuremath{\left\lVert#1\right\rVert}}
 
-\newtcbtheorem[crefname={Lemma}{Lemmata}]{lemma}{Lemma}{ %
-  enhanced,
-  left=1mm,
-  right=2mm,
-  top=0mm,
-  middle=0mm,
-  bottom=2mm,
-  toprule=0mm,
-  titlerule=0mm,
-  bottomrule=0mm,
-  boxsep=5pt,
-  frame hidden,
-  % colbacktitle=teal!40,
-  coltitle=teal!80!black,
-  colbacktitle=black!5!white,
-  fonttitle=\sffamily\bfseries,
+\RequirePackage{cleveref}
+
+\tcbset{sidestrokebox/.style={ %
+    enhanced,
+    left=1mm,
+    right=2mm,
+    top=0mm,
+    middle=0mm,
+    bottom=0mm,
+    toprule=0mm,
+    titlerule=0mm,
+    bottomrule=0mm,
+    boxsep=5pt,
+    frame hidden,
+    fonttitle=\sffamily\bfseries,
+    sharp corners=west,
+    breakable,
+    break at=-\baselineskip/0pt,
+    coltitle=#1!80!black,
+    colbacktitle=black!5!white,
+    borderline west={4pt}{0pt}{#1},
+  }}
+
+\newtcbtheorem[crefname={lemma}{lemmata},Crefname={Lemma}{Lemmata}]{lemma}{Lemma}{ %
+  sidestrokebox={teal},
   fontupper=\itshape,
-  segmentation style={solid, help lines},
   lower separated=false,
-  borderline west={4pt}{0pt}{teal!100},
-  % fuzzy shadow={.5mm}{-.5mm}{0mm}{0.1mm}{black!50!white}, 
-  sharp corners=west,
-  breakable,
-  break at=-\baselineskip/0pt,
-  before lower*=\begin{proof}\renewcommand\qedsymbol{\rotatebox[origin=c]{45}{$\textcolor{teal!80!white}{\blacksquare}$}},
-  after lower*=\end{proof}
+  before lower*={\begin{proof}\renewcommand\qedsymbol{\rotatebox[origin=c]{45}{$\textcolor{teal!80!white}{\blacksquare}$}}},
+  after lower*={\vspace{2mm}\end{proof}}
 }{lem}
+
+\newtcbtheorem[crefname={definition}{definitions},Crefname={Definition}{Definitions}]{definition}{Definition}{ %
+  sidestrokebox={darkgray}
+}{def}
+
+\DeclareTCBListing[auto counter,crefname={listing}{listings},Crefname={Listing}{Listings}]{listingbox}{mm}{ %
+  sidestrokebox={brown},
+  listing only,
+  title=Listing \thetcbcounter\notblank{#1}{: #1}{},
+  label=lst:\ifblank{#2}{\thetcbcounter}{#2}
+}
+
+\DeclareTColorBox[auto counter,crefname={algorithm}{algorithms},Crefname={Algorithm}{Algorithms}]{algorithmbox}{mm}{ %
+  sidestrokebox={violet},
+  title=Algorithm \thetcbcounter\notblank{#1}{: #1}{},
+  label=alg:\ifblank{#2}{\thetcbcounter}{#2},
+  before upper*={\begin{algorithm}[H]},
+  after upper*={\end{algorithm}}
+}
 
 \renewcommand{\thesection}{\Large\sffamily\GetTranslation{exercise} \arabic{section}}
 \renewcommand{\thesubsection}{\color{blue}\large\sffamily\GetTranslation{exercise} \arabic{section}.\alph{subsection}} 
@@ -151,4 +173,3 @@
 \lhead{\@title\notblank{\Exercise@serie}{ -- \GetTranslation{series} \Exercise@serie}{}} 
 \rhead{\@author}
 \makeatother
-
