@@ -35,10 +35,17 @@
 \RequirePackage{enumitem}
 
 \RequirePackage[most]{tcolorbox}
-\RequirePackage{algorithm2e}
 
 % translations
+\RequirePackage{babel}
 \RequirePackage{translations}
+
+\ifcurrentlanguage{German}{
+  \RequirePackage[german, onelanguage, linesnumbered, noend]{algorithm2e}
+}{
+  \RequirePackage[linesnumbered, noend]{algorithm2e}
+} 
+
 \DeclareTranslation{English}{exercise}{Exercise}
 \DeclareTranslation{German}{exercise}{Aufgabe}
 \DeclareTranslationFallback{exercise}{Exercise}
@@ -46,6 +53,70 @@
 \DeclareTranslation{English}{series}{Series}
 \DeclareTranslation{German}{series}{Serie}
 \DeclareTranslationFallback{series}{Series}
+
+\DeclareTranslation{English}{algorithm}{algorithm}
+\DeclareTranslation{German}{algorithm}{Algorithmus}
+\DeclareTranslationFallback{algorithm}{algorithm}
+
+\DeclareTranslation{English}{Algorithm}{Algorithm}
+\DeclareTranslation{German}{Algorithm}{Algorithmus}
+\DeclareTranslationFallback{Algorithm}{Algorithm}
+
+\DeclareTranslation{English}{algorithms}{algorithms}
+\DeclareTranslation{German}{algorithms}{Algorithmen}
+\DeclareTranslationFallback{algorithms}{algorithms}
+
+\DeclareTranslation{English}{Algorithms}{Algorithms}
+\DeclareTranslation{German}{Algorithms}{Algorithmen}
+\DeclareTranslationFallback{Algorithms}{Algorithms}
+
+\DeclareTranslation{English}{lemma}{lemma}
+\DeclareTranslation{German}{lemma}{Lemma}
+\DeclareTranslationFallback{lemma}{lemma}
+
+\DeclareTranslation{English}{Lemma}{Lemma}
+\DeclareTranslation{German}{Lemma}{Lemma}
+\DeclareTranslationFallback{Lemma}{Lemma}
+
+\DeclareTranslation{English}{lemmata}{lemmata}
+\DeclareTranslation{German}{lemmata}{Lemmata}
+\DeclareTranslationFallback{lemmata}{lemmata}
+
+\DeclareTranslation{English}{Lemmata}{Lemmata}
+\DeclareTranslation{German}{Lemmata}{Lemmata}
+\DeclareTranslationFallback{Lemmata}{Lemmata}
+
+\DeclareTranslation{English}{def}{definition}
+\DeclareTranslation{German}{def}{Definition}
+\DeclareTranslationFallback{def}{definition}
+
+\DeclareTranslation{English}{Def}{Definition}
+\DeclareTranslation{German}{Def}{Definition}
+\DeclareTranslationFallback{Def}{Definition}
+
+\DeclareTranslation{English}{defs}{definitions}
+\DeclareTranslation{German}{defs}{Definitionen}
+\DeclareTranslationFallback{defs}{definitions}
+
+\DeclareTranslation{English}{Defs}{Definitions}
+\DeclareTranslation{German}{Defs}{Definitionen}
+\DeclareTranslationFallback{Defs}{Definitions}
+
+\DeclareTranslation{English}{lst}{listing}
+\DeclareTranslation{German}{lst}{Protokoll}
+\DeclareTranslationFallback{lst}{listing}
+
+\DeclareTranslation{English}{Lst}{Listing}
+\DeclareTranslation{German}{Lst}{Protokoll}
+\DeclareTranslationFallback{Lst}{Listing}
+
+\DeclareTranslation{English}{lsts}{listings}
+\DeclareTranslation{German}{lsts}{Protokolle}
+\DeclareTranslationFallback{lsts}{listings}
+
+\DeclareTranslation{English}{Lsts}{Listings}
+\DeclareTranslation{German}{Lsts}{Protokolle}
+\DeclareTranslationFallback{Lsts}{Listings}
 
 \setlength{\parindent}{0pt}
 
@@ -135,7 +206,7 @@
     borderline west={4pt}{0pt}{#1},
   }}
 
-\newtcbtheorem[crefname={lemma}{lemmata},Crefname={Lemma}{Lemmata}]{lemma}{Lemma}{ %
+\newtcbtheorem[crefname={\GetTranslation{lemma}}{\GetTranslation{lemmata}},Crefname={\GetTranslation{Lemma}}{\GetTranslation{Lemmata}}]{lemma}{\GetTranslation{Lemma}}{ %
   sidestrokebox={teal},
   fontupper=\itshape,
   lower separated=false,
@@ -143,20 +214,20 @@
   after lower*={\vspace{2mm}\end{proof}}
 }{lem}
 
-\newtcbtheorem[crefname={definition}{definitions},Crefname={Definition}{Definitions}]{definition}{Definition}{ %
+\newtcbtheorem[crefname={\GetTranslation{def}}{\GetTranslation{defs}},Crefname={\GetTranslation{Def}}{\GetTranslation{Defs}}]{definition}{\GetTranslation{Definition}}{ %
   sidestrokebox={darkgray}
 }{def}
 
-\DeclareTCBListing[auto counter,crefname={listing}{listings},Crefname={Listing}{Listings}]{listingbox}{mm}{ %
+\DeclareTCBListing[auto counter,crefname={\GetTranslation{lst}}{\GetTranslation{lsts}},Crefname={\GetTranslation{Lst}}{\GetTranslation{Lsts}}]{listingbox}{mm}{ %
   sidestrokebox={brown},
   listing only,
-  title=Listing \thetcbcounter\notblank{#1}{: #1}{},
+  title=\GetTranslation{Lst} \thetcbcounter\notblank{#1}{: #1}{},
   label=lst:\ifblank{#2}{\thetcbcounter}{#2}
 }
 
-\DeclareTColorBox[auto counter,crefname={algorithm}{algorithms},Crefname={Algorithm}{Algorithms}]{algorithmbox}{mm}{ %
+\DeclareTColorBox[auto counter,crefname={\GetTranslation{algorithm}}{\GetTranslation{algorithms}},Crefname={\GetTranslation{Algorithm}}{\GetTranslation{Algorithms}}]{algorithmbox}{mm}{ %
   sidestrokebox={violet},
-  title=Algorithm \thetcbcounter\notblank{#1}{: #1}{},
+  title=\GetTranslation{Algorithm} \thetcbcounter\notblank{#1}{: #1}{},
   label=alg:\ifblank{#2}{\thetcbcounter}{#2},
   before upper*={\begin{algorithm}[H]},
   after upper*={\end{algorithm}}
