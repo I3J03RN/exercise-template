@@ -18,8 +18,16 @@
 
 \RequirePackage[a4paper, margin=2cm]{geometry}
 
-\RequirePackage[utf8]{inputenc}
-\RequirePackage[T1]{fontenc}
+\RequirePackage{iftex}
+
+\ifpdftex
+  \RequirePackage[utf8]{inputenc}
+  \RequirePackage[T1]{fontenc}
+\fi
+
+\ifluatex
+  \RequirePackage{fontspec}
+\fi
 
 \RequirePackage{lmodern, textcomp}
 
