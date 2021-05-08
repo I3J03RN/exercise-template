@@ -10,7 +10,8 @@
   family=Exercise,
   prefix=Exercise@
 }
-\DeclareStringOption{serie}
+\DeclareStringOption{serie}[ ]
+\DeclareBoolOption[true]{redefsec}
 
 \ProcessKeyvalOptions*
 
@@ -42,6 +43,7 @@
 
 \RequirePackage{enumitem}
 
+\RequirePackage{tikz}
 \RequirePackage[most]{tcolorbox}
 
 % translations
@@ -93,6 +95,22 @@
 \DeclareTranslation{English}{Lemmata}{Lemmata}
 \DeclareTranslation{German}{Lemmata}{Lemmata}
 \DeclareTranslationFallback{Lemmata}{Lemmata}
+
+\DeclareTranslation{English}{theorem}{theorem}
+\DeclareTranslation{German}{theorem}{Theorem}
+\DeclareTranslationFallback{theorem}{theorem}
+
+\DeclareTranslation{English}{Theorem}{Theorem}
+\DeclareTranslation{German}{Theorem}{Theorem}
+\DeclareTranslationFallback{Theorem}{Theorem}
+
+\DeclareTranslation{English}{theorems}{theorems}
+\DeclareTranslation{German}{theorems}{Theoreme}
+\DeclareTranslationFallback{theorems}{theorems}
+
+\DeclareTranslation{English}{Theorems}{Theorems}
+\DeclareTranslation{German}{Theorems}{Theoreme}
+\DeclareTranslationFallback{Theorems}{Theorems}
 
 \DeclareTranslation{English}{def}{definition}
 \DeclareTranslation{German}{def}{Definition}
@@ -222,16 +240,33 @@
   after lower*={\vspace{2mm}\end{proof}}
 }{lem}
 
-\newtcbtheorem[crefname={\GetTranslation{def}}{\GetTranslation{defs}},Crefname={\GetTranslation{Def}}{\GetTranslation{Defs}}]{definition}{\GetTranslation{Definition}}{ %
-  sidestrokebox={darkgray}
-}{def}
+\newtcbtheorem[crefname={\GetTranslation{theorem}}{\GetTranslation{theorems}},Crefname={\GetTranslation{Theorem}}{\GetTranslation{Theorems}}]{theorem}{\GetTranslation{Theorem}}{ %
+  sidestrokebox={red},
+  fontupper=\itshape,
+  lower separated=false,
+  before lower*={\begin{proof}\renewcommand\qedsymbol{\rotatebox[origin=c]{45}{$\textcolor{red!80!white}{\blacksquare}$}}},
+  after lower*={\vspace{2mm}\end{proof}}
+}{thm}
+
+\DeclareTColorBox[
+  auto counter,
+  crefname={\GetTranslation{def}}{\GetTranslation{defs}},
+  Crefname={\GetTranslation{Def}}{\GetTranslation{Defs}}]
+  {definition}{mmo}{ %
+    sidestrokebox={darkgray},
+    title=\GetTranslation{Def} \thetcbcounter\notblank{#1}{: #1}{},
+    label=thm:\ifblank{#2}{\thetcbcounter}{#2},
+    IfValueT={#3}{overlay={
+        \node[anchor=north east, inner sep=5pt, align=flush right,
+        text width=1.8cm] at (title.north west) {\vphantom{Ag}#3};
+      }}
+  }
 
 \DeclareTCBListing[auto counter,crefname={\GetTranslation{lst}}{\GetTranslation{lsts}},Crefname={\GetTranslation{Lst}}{\GetTranslation{Lsts}}]{listingbox}{mm}{ %
   sidestrokebox={brown},
   listing only,
   title=\GetTranslation{Lst} \thetcbcounter\notblank{#1}{: #1}{},
-  label=lst:\ifblank{#2}{\thetcbcounter}{#2}
-}
+  label=lst:\ifblank{#2}{\thetcbcounter}{#2} }
 
 \DeclareTColorBox[auto counter,crefname={\GetTranslation{algorithm}}{\GetTranslation{algorithms}},Crefname={\GetTranslation{Algorithm}}{\GetTranslation{Algorithms}}]{algorithmbox}{mm}{ %
   sidestrokebox={violet},
@@ -241,14 +276,16 @@
   after upper*={\end{algorithm}}
 }
 
+\ifExercise@redefsec
 \renewcommand{\thesection}{\Large\sffamily\GetTranslation{exercise} \arabic{section}}
 \renewcommand{\thesubsection}{\color{blue}\large\sffamily\GetTranslation{exercise} \arabic{section}.\alph{subsection}} 
 \renewcommand{\thesubsubsection}{\color{blue}\sffamily\GetTranslation{exercise} \arabic{section}.\alph{subsection}.\roman{subsubsection}}
- 
+\fi 
+
 % Header
 \pagestyle{fancy}
 \fancyhf{}
 \makeatletter
-\lhead{\@title\notblank{\Exercise@serie}{ -- \GetTranslation{series} \Exercise@serie}{}} 
+\lhead{\@title\expandafter\ifblank\expandafter{\Exercise@serie}{}{ -- \GetTranslation{series} \Exercise@serie}} 
 \rhead{\@author}
 \makeatother
