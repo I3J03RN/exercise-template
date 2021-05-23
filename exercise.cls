@@ -289,3 +289,7 @@
 \lhead{\@title\expandafter\ifblank\expandafter{\Exercise@serie}{}{ -- \GetTranslation{series} \Exercise@serie}} 
 \rhead{\@author}
 \makeatother
+
+
+% https://tex.stackexchange.com/a/577347
+\ProcessOptions\relax
