@@ -255,7 +255,7 @@
   {definition}{mmo}{ %
     sidestrokebox={darkgray},
     title=\GetTranslation{Def} \thetcbcounter\notblank{#1}{: #1}{},
-    label=thm:\ifblank{#2}{\thetcbcounter}{#2},
+    label=def:\ifblank{#2}{\thetcbcounter}{#2},
     IfValueT={#3}{overlay={
         \node[anchor=north east, inner sep=5pt, align=flush right,
         text width=1.8cm] at (title.north west) {\vphantom{Ag}#3};

@@ -85,7 +85,9 @@
 \end{lemma}
 \begin{theorem}{%<name%>}{%<label%>}%\    %<content...%>%\    \tcblower%\      %<proof...%>%\   \end{theorem}
 \end{theorem}
+\begin{definition}{%<name%>}{%<label%>}%\    %<content...%>%\    \tcblower%\      %<proof...%>%\   \end{definition}
+\end{definition}
 \begin{algorithm}%\   %<code...%>%\    \end{algorithm}
 \end{algorithm}
 
-\tcblower#/lemma,theorem
+\tcblower#/lemma,theorem,definition
