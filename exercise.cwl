@@ -87,6 +87,8 @@
 \end{theorem}
 \begin{definition}{%<name%>}{%<label%>}%\    %<content...%>%\    \tcblower%\      %<proof...%>%\   \end{definition}
 \end{definition}
+\begin{corollary}{%<name%>}{%<label%>}%\    %<content...%>%\    \tcblower%\      %<proof...%>%\   \end{corollary}
+\end{corollary}
 \begin{algorithm}%\   %<code...%>%\    \end{algorithm}
 \end{algorithm}
 

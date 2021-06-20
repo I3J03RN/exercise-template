@@ -112,6 +112,22 @@
 \DeclareTranslation{German}{Theorems}{Theoreme}
 \DeclareTranslationFallback{Theorems}{Theorems}
 
+\DeclareTranslation{English}{corollary}{corollary}
+\DeclareTranslation{German}{corollary}{Korrolar}
+\DeclareTranslationFallback{corollary}{corollary}
+
+\DeclareTranslation{English}{Corollary}{Corollary}
+\DeclareTranslation{German}{Corollary}{Korrolar}
+\DeclareTranslationFallback{Corollary}{Corollary}
+
+\DeclareTranslation{English}{corollaries}{corollaries}
+\DeclareTranslation{German}{corollaries}{Korrolare}
+\DeclareTranslationFallback{corollaries}{corollaries}
+
+\DeclareTranslation{English}{Corollaries}{corollaries}
+\DeclareTranslation{German}{Corollaries}{Korrolare}
+\DeclareTranslationFallback{Corollaries}{corollaries}
+
 \DeclareTranslation{English}{def}{definition}
 \DeclareTranslation{German}{def}{Definition}
 \DeclareTranslationFallback{def}{definition}
@@ -247,6 +263,16 @@
   before lower*={\begin{proof}\renewcommand\qedsymbol{\rotatebox[origin=c]{45}{$\textcolor{red!80!white}{\blacksquare}$}}},
   after lower*={\vspace{2mm}\end{proof}}
 }{thm}
+
+\newtcbtheorem[crefname={\GetTranslation{corollary}}{\GetTranslation{corollaries}},Crefname={\GetTranslation{Corollary}}{\GetTranslation{Corollaries}}]{corollary}{\GetTranslation{Corollary}}{
+ %
+  sidestrokebox={pink},
+  fontupper=\itshape,
+  lower separated=false,
+  before 
+  lower*={\begin{proof}\renewcommand\qedsymbol{\rotatebox[origin=c]{45}{$\textcolor{red!80!white}{\blacksquare}$}}},
+    after lower*={\vspace{2mm}\end{proof}}
+}{corr}
 
 \DeclareTColorBox[
   auto counter,
