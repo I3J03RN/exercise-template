@@ -223,6 +223,9 @@
 
 \newcommand{\setM}[2]{\ensuremath{\left\{#1 : #2 \right\}}}
 \newcommand{\abs}[1]{\ensuremath{\left\lvert#1\right\rvert}}
+\newcommand{\floor}[1]{\ensuremath{\left\lfloor#1\right\rfloor}}
+\newcommand{\ceil}[1]{\ensuremath{\left\lceil#1\right\rceil}}
+\newcommand{\fpart}[1]{\ensuremath{\left\{#1\right\}}}
 \newcommand{\norm}[1]{\ensuremath{\left\lVert#1\right\rVert}}
 
 \RequirePackage{cleveref}

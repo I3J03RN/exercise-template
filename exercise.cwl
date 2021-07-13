@@ -75,6 +75,9 @@
 \setM{arg1}{arg2}#m
 \abs{arg1}#m
 \norm{arg1}#m
+\floor{arg1}#m
+\ceil{arg1}#m
+\fpart{arg1}#m
 
 \NP
 \PP
