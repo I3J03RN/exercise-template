@@ -149,10 +149,10 @@
 }{lem}
 
 \newtcbtheorem[crefname={\GetTranslation{theorem}}{\GetTranslation{theorems}},Crefname={\GetTranslation{Theorem}}{\GetTranslation{Theorems}}]{theorem}{\GetTranslation{Theorem}}{ %
-  sidestrokebox={red},
+  sidestrokebox={blue},
   fontupper=\itshape,
   lower separated=false,
-  before lower*={\begin{proof}\renewcommand\qedsymbol{\rotatebox[origin=c]{45}{$\textcolor{red!80!white}{\blacksquare}$}}},
+  before lower*={\begin{proof}\renewcommand\qedsymbol{\rotatebox[origin=c]{45}{$\textcolor{blue!80!white}{\blacksquare}$}}},
   after lower*={\vspace{2mm}\end{proof}}
 }{thm}
 
@@ -186,10 +186,11 @@
   title=\GetTranslation{Lst} \thetcbcounter\notblank{#1}{: #1}{},
   label=lst:\ifblank{#2}{\thetcbcounter}{#2} }
 
-\DeclareTColorBox[auto counter,crefname={\GetTranslation{algorithm}}{\GetTranslation{algorithms}},Crefname={\GetTranslation{Algorithm}}{\GetTranslation{Algorithms}}]{algorithmbox}{mm}{ %
+\DeclareTColorBox[auto counter,crefname={\GetTranslation{algorithm}}{\GetTranslation{algorithms}},Crefname={\GetTranslation{Algorithm}}{\GetTranslation{Algorithms}}]{algorithmbox}{mm!O{}}{ %
   sidestrokebox={violet},
   title=\GetTranslation{Algorithm} \thetcbcounter\notblank{#1}{: #1}{},
   label=alg:\ifblank{#2}{\thetcbcounter}{#2},
   before upper*={\begin{algorithm}[H]},
-  after upper*={\end{algorithm}}
+  after upper*={\end{algorithm}},
+  #3
 }
