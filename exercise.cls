@@ -53,7 +53,8 @@
 \RequirePackage{todonotes}
 
 \ifExercise@redefsec
-\renewcommand{\thesection}{\Large\sffamily\GetTranslation{exercise} \arabic{section}}
+\renewcommand{\thesection}{\color{blue}\Large\sffamily\GetTranslation{exercise} 
+\arabic{section}}
 \renewcommand{\thesubsection}{\color{blue}\large\sffamily\GetTranslation{exercise} \arabic{section}.\alph{subsection}} 
 \renewcommand{\thesubsubsection}{\color{blue}\sffamily\GetTranslation{exercise} \arabic{section}.\alph{subsection}.\roman{subsubsection}}
 \fi 
