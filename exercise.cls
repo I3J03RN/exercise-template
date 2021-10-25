@@ -50,6 +50,8 @@
 
 \RequirePackage{colorful-boxes}
 
+\RequirePackage{todonotes}
+
 \ifExercise@redefsec
 \renewcommand{\thesection}{\Large\sffamily\GetTranslation{exercise} \arabic{section}}
 \renewcommand{\thesubsection}{\color{blue}\large\sffamily\GetTranslation{exercise} \arabic{section}.\alph{subsection}} 
