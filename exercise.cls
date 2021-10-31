@@ -1,6 +1,6 @@
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesClass{exercise}
-\LoadClass{article}
+\LoadClass{scrartcl}
 
 \RequirePackage{xparse}
 \RequirePackage{etoolbox}
@@ -44,11 +44,13 @@
 \RequirePackage{babel}
 \RequirePackage{translations}
 
-\setlength{\parindent}{0pt}
-
 \RequirePackage{cleveref}
 
 \RequirePackage{colorful-boxes}
+
+% load after algorithm2e to prevent algorithm shifting
+% https://tex.stackexchange.com/a/299703
+\RequirePackage{parskip}
 
 \RequirePackage{todonotes}
 
