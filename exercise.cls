@@ -1,6 +1,6 @@
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesClass{exercise}
-\LoadClass{scrartcl}
+\LoadClass[numbers=noendperiod]{scrartcl}
 
 \RequirePackage{xparse}
 \RequirePackage{etoolbox}
@@ -55,8 +55,7 @@
 \RequirePackage{todonotes}
 
 \ifExercise@redefsec
-\renewcommand{\thesection}{\color{blue}\Large\sffamily\GetTranslation{exercise} 
-\arabic{section}}
+\renewcommand{\thesection}{\color{blue}\Large\sffamily\GetTranslation{exercise} \arabic{section}}
 \renewcommand{\thesubsection}{\color{blue}\large\sffamily\GetTranslation{exercise} \arabic{section}.\alph{subsection}} 
 \renewcommand{\thesubsubsection}{\color{blue}\sffamily\GetTranslation{exercise} \arabic{section}.\alph{subsection}.\roman{subsubsection}}
 \fi 
