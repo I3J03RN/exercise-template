@@ -1,6 +1,9 @@
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesClass{exercise}
-\LoadClass[numbers=noendperiod]{scrartcl}
+\LoadClass[
+numbers=noendperiod,
+a4paper,
+]{scrartcl}
 
 \RequirePackage{xparse}
 \RequirePackage{etoolbox}
@@ -16,8 +19,6 @@
 \ProcessKeyvalOptions*
 
 \NewDocumentCommand{\serie}{}{\Exercise@serie}
-
-\RequirePackage[a4paper, margin=2cm]{geometry}
 
 \RequirePackage{iftex}
 
@@ -48,23 +49,23 @@
 
 \RequirePackage{colorful-boxes}
 
-% load after algorithm2e to prevent algorithm shifting
+% change parskip after loading algorithm2e to prevent algorithm shifting
 % https://tex.stackexchange.com/a/299703
-\RequirePackage{parskip}
+\KOMAoption{parskip}{half*}
 
 \RequirePackage{todonotes}
 
 \ifExercise@redefsec
 \renewcommand{\thesection}{\color{blue}\Large\sffamily\GetTranslation{exercise} \arabic{section}}
-\renewcommand{\thesubsection}{\color{blue}\large\sffamily\GetTranslation{exercise} \arabic{section}.\alph{subsection}} 
+\renewcommand{\thesubsection}{\color{blue}\large\sffamily\GetTranslation{exercise} \arabic{section}.\alph{subsection}}
 \renewcommand{\thesubsubsection}{\color{blue}\sffamily\GetTranslation{exercise} \arabic{section}.\alph{subsection}.\roman{subsubsection}}
-\fi 
+\fi
 
 % Header
 \pagestyle{fancy}
 \fancyhf{}
 \makeatletter
-\lhead{\@title\expandafter\ifblank\expandafter{\Exercise@serie}{}{ -- \GetTranslation{series} \Exercise@serie}} 
+\lhead{\@title\expandafter\ifblank\expandafter{\Exercise@serie}{}{ -- \GetTranslation{series} \Exercise@serie}}
 \rhead{\@author}
 \makeatother
 
