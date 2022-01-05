@@ -4,6 +4,7 @@
 numbers=noendperiod,
 a4paper,
 ]{scrartcl}
+\RequirePackage[headsepline]{scrlayer-scrpage}
 
 \RequirePackage{xparse}
 \RequirePackage{etoolbox}
@@ -33,8 +34,6 @@ a4paper,
 
 \RequirePackage{lmodern, textcomp}
 
-\RequirePackage{fancyhdr}
-
 \RequirePackage[hidelinks]{hyperref}
 
 \RequirePackage{enumitem}
@@ -62,11 +61,11 @@ a4paper,
 \fi
 
 % Header
-\pagestyle{fancy}
-\fancyhf{}
+\setkomafont{pagehead}{\normalfont}
+\pagestyle{scrheadings}
 \makeatletter
-\lhead{\@title\expandafter\ifblank\expandafter{\Exercise@serie}{}{ -- \GetTranslation{series} \Exercise@serie}}
-\rhead{\@author}
+\lohead{\@title\expandafter\ifblank\expandafter{\Exercise@serie}{}{ -- \GetTranslation{series} \Exercise@serie}}
+\rohead{\@author}
 \makeatother
 
 
