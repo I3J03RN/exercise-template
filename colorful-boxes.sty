@@ -1,6 +1,14 @@
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesClass{colorful-boxes}
 
+\RequirePackage{kvoptions}
+\SetupKeyvalOptions{
+  family=ColorfulBoxes,
+  prefix=ColorfulBoxes@
+}
+\DeclareStringOption{numberwithin}
+\ProcessKeyvalOptions*
+
 \RequirePackage{xcolor}
 
 \RequirePackage{tikz}
@@ -9,11 +17,19 @@
 \RequirePackage{babel}
 \RequirePackage{translations}
 
+
+% https://tex.stackexchange.com/a/210172
+\RequirePackage{algorithm2e}
+
+\makeatletter
+\newcommand{\algorithmstyle}[1]{\renewcommand{\algocf@style}{#1}}
+\makeatother
+
 \ifcurrentlanguage{German}{
-  \RequirePackage[german, onelanguage, linesnumbered, noend]{algorithm2e}
+  \algorithmstyle{german, onelanguage, linesnumbered, noend}
 }{
-  \RequirePackage[linesnumbered, noend]{algorithm2e}
-} 
+  \algorithmstyle{linesnumbered, noend}
+}
 
 \DeclareTranslation{English}{exercise}{Exercise}
 \DeclareTranslation{German}{exercise}{Aufgabe}
@@ -140,53 +156,92 @@
     borderline west={4pt}{0pt}{#1},
   }}
 
-\newtcbtheorem[crefname={\GetTranslation{lemma}}{\GetTranslation{lemmata}},Crefname={\GetTranslation{Lemma}}{\GetTranslation{Lemmata}}]{lemma}{\GetTranslation{Lemma}}{ %
+% dummy box for counter with number within option
+\makeatletter
+\ifdefvoid{\ColorfulBoxes@numberwithin}{
+  \DeclareTColorBox[auto counter]{dummycounter}{}{}
+}{
+  \DeclareTColorBox[auto counter, number within=\ColorfulBoxes@numberwithin]{dummycounter}{}{}
+}
+\makeatother
+
+\newtcbtheorem[
+  crefname={\GetTranslation{lemma}}{\GetTranslation{lemmata}},
+  Crefname={\GetTranslation{Lemma}}{\GetTranslation{Lemmata}},
+  use counter from=dummycounter
+]{lemma}{\GetTranslation{Lemma}}{ %
   sidestrokebox={teal},
   fontupper=\itshape,
   lower separated=false,
-  before lower*={\begin{proof}\renewcommand\qedsymbol{\rotatebox[origin=c]{45}{$\textcolor{teal!80!white}{\blacksquare}$}}},
+  before lower*={
+    \begin{proof}
+      \renewcommand\qedsymbol{\rotatebox[origin=c]{45}{$\textcolor{teal!80!white}{\blacksquare}$}}
+    },
   after lower*={\vspace{2mm}\end{proof}}
 }{lem}
 
-\newtcbtheorem[crefname={\GetTranslation{theorem}}{\GetTranslation{theorems}},Crefname={\GetTranslation{Theorem}}{\GetTranslation{Theorems}}]{theorem}{\GetTranslation{Theorem}}{ %
+\newtcbtheorem[
+  crefname={\GetTranslation{theorem}}{\GetTranslation{theorems}},
+  Crefname={\GetTranslation{Theorem}}{\GetTranslation{Theorems}},
+  use counter from=dummycounter
+]{theorem}{\GetTranslation{Theorem}}{ %
   sidestrokebox={blue},
   fontupper=\itshape,
   lower separated=false,
-  before lower*={\begin{proof}\renewcommand\qedsymbol{\rotatebox[origin=c]{45}{$\textcolor{blue!80!white}{\blacksquare}$}}},
+  before lower*={
+    \begin{proof}
+      \renewcommand\qedsymbol{\rotatebox[origin=c]{45}{$\textcolor{blue!80!white}{\blacksquare}$}}
+    },
   after lower*={\vspace{2mm}\end{proof}}
 }{thm}
 
-\newtcbtheorem[crefname={\GetTranslation{corollary}}{\GetTranslation{corollaries}},Crefname={\GetTranslation{Corollary}}{\GetTranslation{Corollaries}}]{corollary}{\GetTranslation{Corollary}}{
- %
+\newtcbtheorem[
+  crefname={\GetTranslation{corollary}}{\GetTranslation{corollaries}},
+  Crefname={\GetTranslation{Corollary}}{\GetTranslation{Corollaries}},
+  use counter from=dummycounter
+]{corollary}{\GetTranslation{Corollary}}{
   sidestrokebox={pink},
   fontupper=\itshape,
   lower separated=false,
-  before 
-  lower*={\begin{proof}\renewcommand\qedsymbol{\rotatebox[origin=c]{45}{$\textcolor{red!80!white}{\blacksquare}$}}},
-    after lower*={\vspace{2mm}\end{proof}}
+  before lower*={
+    \begin{proof}
+      \renewcommand\qedsymbol{\rotatebox[origin=c]{45}{$\textcolor{red!80!white}{\blacksquare}$}}
+    },
+  after lower*={\vspace{2mm}\end{proof}}
 }{corr}
 
 \DeclareTColorBox[
-  auto counter,
   crefname={\GetTranslation{def}}{\GetTranslation{defs}},
-  Crefname={\GetTranslation{Def}}{\GetTranslation{Defs}}]
-  {definition}{mmo}{ %
-    sidestrokebox={darkgray},
-    title=\GetTranslation{Def} \thetcbcounter\notblank{#1}{: #1}{},
-    label=def:\ifblank{#2}{\thetcbcounter}{#2},
-    IfValueT={#3}{overlay unbroken and first={
-        \node[anchor=north east, inner sep=5pt, align=flush right,
-        text width=1.8cm] at (title.north west) {\vphantom{Ag}#3};
-      }}
+  Crefname={\GetTranslation{Def}}{\GetTranslation{Defs}},
+  use counter from=dummycounter
+]{definition}{mmo}{ %
+  sidestrokebox={darkgray},
+  title=\GetTranslation{Def} \thetcbcounter\notblank{#1}{: #1}{},
+  label=def:\ifblank{#2}{\thetcbcounter}{#2},
+  IfValueT={#3}{
+    overlay unbroken and first={
+      \node[anchor=north east, inner sep=5pt, align=flush right,
+      text width=1.8cm] at (title.north west) {\vphantom{Ag}#3};
+    }
   }
+}
 
-\DeclareTCBListing[auto counter,crefname={\GetTranslation{lst}}{\GetTranslation{lsts}},Crefname={\GetTranslation{Lst}}{\GetTranslation{Lsts}}]{listingbox}{mm}{ %
+\DeclareTCBListing[
+  auto counter,
+  crefname={\GetTranslation{lst}}{\GetTranslation{lsts}},
+  Crefname={\GetTranslation{Lst}}{\GetTranslation{Lsts}}
+]{listingbox}{mm}{ %
   sidestrokebox={brown},
   listing only,
   title=\GetTranslation{Lst} \thetcbcounter\notblank{#1}{: #1}{},
-  label=lst:\ifblank{#2}{\thetcbcounter}{#2} }
+  label=lst:\ifblank{#2}{\thetcbcounter}{#2}
+}
 
-\DeclareTColorBox[auto counter,crefname={\GetTranslation{algorithm}}{\GetTranslation{algorithms}},Crefname={\GetTranslation{Algorithm}}{\GetTranslation{Algorithms}}]{algorithmbox}{mm!O{}}{ %
+\DeclareTColorBox[
+  auto counter,
+  crefname={\GetTranslation{algorithm}}{\GetTranslation{algorithms}},
+  Crefname={\GetTranslation{Algorithm}}{\GetTranslation{Algorithms}}
+]{algorithmbox}{mm!O{}}{ %
   sidestrokebox={violet},
   title=\GetTranslation{Algorithm} \thetcbcounter\notblank{#1}{: #1}{},
   label=alg:\ifblank{#2}{\thetcbcounter}{#2},
