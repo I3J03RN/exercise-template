@@ -7,6 +7,7 @@
   prefix=ColorfulBoxes@
 }
 \DeclareStringOption{numberwithin}
+\DeclareBoolOption{inlinetheoremtitle}
 \ProcessKeyvalOptions*
 
 \RequirePackage{xcolor}
@@ -135,7 +136,7 @@
 \DeclareTranslation{German}{Lsts}{Protokolle}
 \DeclareTranslationFallback{Lsts}{Listings}
 
-\tcbset{sidestrokebox/.style={ %
+\tcbset{sidestrokebox/.style={
     enhanced,
     left=1mm,
     right=2mm,
@@ -147,21 +148,38 @@
     bottomrule=0mm,
     boxsep=5pt,
     frame hidden,
-    fonttitle=\sffamily\bfseries,
+    fonttitle=\upshape\sffamily\bfseries,
     sharp corners=west,
     breakable,
     break at=-\baselineskip/0pt,
     coltitle=#1!80!black,
     colbacktitle=black!5!white,
     borderline west={4pt}{0pt}{#1},
-  }}
+    % beforeafter skip balanced,
+  },
+  cbtheoremstyle/.style={
+    sidestrokebox={#1},
+  }
+}
+
+
+\makeatletter
+\ifColorfulBoxes@inlinetheoremtitle
+\tcbset{cbtheoremstyle/.append style={
+    after title={.},
+    attach title to upper={\ },
+  }
+}
+\fi
+\makeatother
 
 % dummy box for counter with number within option
 \makeatletter
+\newcounter{colorfulboxtheoremcounter}
 \ifdefvoid{\ColorfulBoxes@numberwithin}{
-  \DeclareTColorBox[auto counter]{dummycounter}{}{}
+  \DeclareTColorBox[use counter=colorfulboxtheoremcounter]{dummycounter}{}{}
 }{
-  \DeclareTColorBox[auto counter, number within=\ColorfulBoxes@numberwithin]{dummycounter}{}{}
+  \DeclareTColorBox[use counter=colorfulboxtheoremcounter, number within=\ColorfulBoxes@numberwithin]{dummycounter}{}{}
 }
 \makeatother
 
@@ -170,7 +188,7 @@
   Crefname={\GetTranslation{Lemma}}{\GetTranslation{Lemmata}},
   use counter from=dummycounter
 ]{lemma}{\GetTranslation{Lemma}}{ %
-  sidestrokebox={teal},
+  cbtheoremstyle={teal},
   fontupper=\itshape,
   lower separated=false,
   before lower*={
@@ -185,7 +203,7 @@
   Crefname={\GetTranslation{Theorem}}{\GetTranslation{Theorems}},
   use counter from=dummycounter
 ]{theorem}{\GetTranslation{Theorem}}{ %
-  sidestrokebox={blue},
+  cbtheoremstyle={blue},
   fontupper=\itshape,
   lower separated=false,
   before lower*={
@@ -200,7 +218,7 @@
   Crefname={\GetTranslation{Corollary}}{\GetTranslation{Corollaries}},
   use counter from=dummycounter
 ]{corollary}{\GetTranslation{Corollary}}{
-  sidestrokebox={pink},
+  cbtheoremstyle={pink},
   fontupper=\itshape,
   lower separated=false,
   before lower*={
@@ -215,13 +233,13 @@
   Crefname={\GetTranslation{Def}}{\GetTranslation{Defs}},
   use counter from=dummycounter
 ]{definition}{mmo}{ %
-  sidestrokebox={darkgray},
+  cbtheoremstyle={darkgray},
   title=\GetTranslation{Def} \thetcbcounter\notblank{#1}{: #1}{},
   label=def:\ifblank{#2}{\thetcbcounter}{#2},
   IfValueT={#3}{
     overlay unbroken and first={
       \node[anchor=north east, inner sep=5pt, align=flush right,
-      text width=1.8cm] at (title.north west) {\vphantom{Ag}#3};
+      text width=1.8cm] at (frame.north west) {\vphantom{Ag}#3};
     }
   }
 }
